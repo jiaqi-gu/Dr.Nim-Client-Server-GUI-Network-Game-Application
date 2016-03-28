@@ -35,14 +35,23 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Class DrNimUI provides the user interface for the Dr. Nim network game.
  *
  * @author  Alan Kaminsky
  * @version 08-Mar-2016
+ *
+ * @reviser Jiaqi Gu
+ * @version 28-Mar-2016
  */
-public class DrNimUI
+public class DrNimUI implements ModelListener
 	{
 
 	/**
@@ -114,6 +123,10 @@ public class DrNimUI
 	private JButton threeButton;
 	private JButton passButton;
 
+	//private int remaining;
+	private ViewListener viewListener;
+
+
 // Hidden constructors.
 
 	/**
@@ -153,6 +166,227 @@ public class DrNimUI
 
 		frame.pack();
 		frame.setVisible (true);
+
+        // On user input actions, trigger the view listener.
+			oneButton.addActionListener (new ActionListener()
+			{
+				public void actionPerformed (ActionEvent e)
+				{
+					msgField.setText("");
+					oneButton.setEnabled(false);
+					twoButton.setEnabled(false);
+					threeButton.setEnabled(false);
+					passButton.setEnabled(false);
+
+					viewListener.takeOne();
+				}
+			});
+
+			twoButton.addActionListener (new ActionListener()
+			{
+				public void actionPerformed (ActionEvent e)
+				{
+					msgField.setText("");
+					oneButton.setEnabled(false);
+					twoButton.setEnabled(false);
+					threeButton.setEnabled(false);
+					passButton.setEnabled(false);
+
+					viewListener.takeTwo();
+				}
+			});
+
+			threeButton.addActionListener (new ActionListener()
+			{
+				public void actionPerformed (ActionEvent e)
+				{
+					msgField.setText("");
+					oneButton.setEnabled(false);
+					twoButton.setEnabled(false);
+					threeButton.setEnabled(false);
+					passButton.setEnabled(false);
+					try
+					{
+						viewListener.takeThree();
+					}
+					catch (IllegalArgumentException exc)
+					{
+						//shouldn't happen
+					}
+
+
+				}
+			});
+
+			passButton.addActionListener (new ActionListener()
+			{
+				public void actionPerformed (ActionEvent e)
+				{
+					msgField.setText("");
+					oneButton.setEnabled(false);
+					twoButton.setEnabled(false);
+					threeButton.setEnabled(false);
+					passButton.setEnabled(false);
+
+					viewListener.takePass();
+				}
+			});
+
+		}
+
+// Exported operations.
+
+		/**
+		 * An object holding a reference to a Password Crack UI.
+		 */
+		private static class DrNimUIRef
+		{
+			public DrNimUI ui;
+		}
+
+		/**
+		 * Construct a new Password Crack UI.
+		 */
+		public static DrNimUI create()
+		{
+			final DrNimUIRef ref = new DrNimUIRef();
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					ref.ui = new DrNimUI();
+					ref.ui.marblePanel.setCount(15); //Initially, it should start at 15 marbles
+					ref.ui.msgField.setText("Your turn!"); //Set text message
+				}
+			});
+			return ref.ui;
+		}
+
+
+		/**
+		 * Execute the given runnable object on the Swing thread.
+		 */
+		private static void onSwingThreadDo
+		(Runnable task)
+		{
+			try
+			{
+				SwingUtilities.invokeAndWait (task);
+			}
+			catch (Throwable exc)
+			{
+				exc.printStackTrace (System.err);
+				System.exit (1);
+			}
+		}
+
+
+		// Exported operations
+
+		/**
+		 * Set the view listener object for this Password Crack UI.
+		 *
+		 * @param  viewListener  View listener.
+		 */
+		public void setViewListener
+		(final ViewListener viewListener)
+		{
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					DrNimUI.this.viewListener = viewListener;
+				}
+			});
+		}
+
+
+		/**
+		 * Perform the process that displays a certain number of marbles
+		 *
+		 * @param num, number of marble remaining
+		 */
+		public void display(final int num){
+			//marblePanel.setCount(num);
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					DrNimUI.this.marblePanel.setCount(num);
+				}
+			});
+		}
+
+		/**
+		 * Perform the process that the player wins
+		 */
+		public void playerWin(){
+			//delay for 2 seconds
+			//try{Thread.sleep(2000);}catch (InterruptedException ie){}//Exception shouldn't happen
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					msgField.setText("You won!"); //Set text message
+
+					//reset the game
+					marblePanel.setCount(15);
+					oneButton.setEnabled(true);
+					twoButton.setEnabled(true);
+					threeButton.setEnabled(true);
+					passButton.setEnabled(true);
+				}
+			});
+		}
+
+		/**
+		 * Perform the process that the Dr.Dim wins
+		 */
+		public void dimWin(){
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					msgField.setText("Dr. Nim won!"); //Set text message
+
+					//reset the game
+					marblePanel.setCount(15);
+					oneButton.setEnabled(true);
+					twoButton.setEnabled(true);
+					threeButton.setEnabled(true);
+					passButton.setEnabled(true);
+				}
+			});
+		}
+
+		/**
+		 * Player's turn, display "Your turn!"
+		 */
+		public void playerTurn(){
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					msgField.setText("Your turn!"); //Set text message
+					oneButton.setEnabled(true);
+					twoButton.setEnabled(true);
+					threeButton.setEnabled(true);
+					passButton.setEnabled(true);
+				}
+			});
+		}
+
+		/**
+		 * Dr. Dim's turn, display "Dr. Nim's turn!"
+		 */
+		public void dimTurn(){
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					msgField.setText("Dr. Nim's turn!"); //Set text message
+				}
+			});
 		}
 
 	}
