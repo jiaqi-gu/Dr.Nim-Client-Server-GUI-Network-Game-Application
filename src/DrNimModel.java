@@ -141,7 +141,6 @@ public class DrNimModel implements ViewListener{
                         //Shouldn't happen
                     }
 
-
                     //If remaining equals to 0, the Dr. dim wins
                     if(Remaining==0){
                         try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}

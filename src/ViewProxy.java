@@ -121,7 +121,6 @@ public class ViewProxy
     private class ReaderThread
             extends Thread
     {
-        private byte[] hash = new byte [16];
 
         public void run()
         {

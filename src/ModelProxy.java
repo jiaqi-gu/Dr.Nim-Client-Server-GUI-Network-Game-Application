@@ -143,7 +143,7 @@ public class ModelProxy implements ViewListener {
                             break;
                         case 'D':
                             //Dim's turn
-                            modelListener.dimWin();
+                            modelListener.dimTurn();
                             break;
                         default:
                             System.err.println ("Bad message");
