@@ -106,6 +106,22 @@ public class ViewProxy
         out.flush();
     }
 
+    /**
+     * Reset the game
+     */
+    public void reset()throws IOException{
+        out.writeByte ('R');
+        out.flush();
+    }
+
+    /**
+     * Make buttons unable
+     */
+    public void unableButton() throws IOException{
+        out.writeByte ('U');
+        out.flush();
+    }
+
     //hidden helper class (from Prof. Kaminsky)
 
     /**

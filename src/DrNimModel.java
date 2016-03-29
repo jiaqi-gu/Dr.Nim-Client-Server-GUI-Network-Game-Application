@@ -47,6 +47,7 @@ public class DrNimModel implements ViewListener{
     (ModelListener modelListener)
     {
         this.modelListener = modelListener;
+        (new initialization()).start();
     }
 
 
@@ -80,6 +81,21 @@ public class DrNimModel implements ViewListener{
 
 
     /**
+     * A thread class to initialize the game
+     */
+    public class initialization extends Thread{
+
+        public void run(){
+            try{
+                modelListener.reset();
+                modelListener.playerTurn();
+            }catch (IOException E){
+                //Shouldn't happen
+            }
+        }
+    }
+
+    /**
      * A thread class to perform the game process
      */
     public class perform extends Thread{
@@ -91,6 +107,14 @@ public class DrNimModel implements ViewListener{
         }
 
         public void run(){
+            //make buttons unable first
+            try{
+                modelListener.unableButton();
+            }catch (IOException E){
+                //Shouldn't happen
+            }
+
+            //perform player's behavior
             for(int i = 0;i<number;i++){
                 try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
                 Remaining-=1;
@@ -101,10 +125,11 @@ public class DrNimModel implements ViewListener{
                 }
                 //If remaining equals to 0, the player wins
                 if(Remaining==0){
-                    try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
-                    Remaining =15;
                     try{
                         modelListener.playerWin();
+                        try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
+                        Remaining =15;
+                        modelListener.reset();
                     }catch (IOException E){
                         //Shouldn't happen
                     }
@@ -143,10 +168,11 @@ public class DrNimModel implements ViewListener{
 
                     //If remaining equals to 0, the Dr. dim wins
                     if(Remaining==0){
-                        try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
-                        Remaining =15;
                         try{
                             modelListener.dimWin();
+                            try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
+                            Remaining =15;
+                            modelListener.reset();
                         }catch (IOException E){
                             //Shouldn't happen
                         }

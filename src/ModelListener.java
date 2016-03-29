@@ -48,5 +48,15 @@ public interface ModelListener {
      */
     public void dimTurn() throws IOException;
 
+    /**
+     * Reset the game
+     */
+    public void reset() throws IOException;
+
+    /**
+     * Make buttons unable
+     */
+    public void unableButton() throws IOException;
+
 
 }

@@ -145,6 +145,14 @@ public class ModelProxy implements ViewListener {
                             //Dim's turn
                             modelListener.dimTurn();
                             break;
+                        case 'R':
+                            //Dim's turn
+                            modelListener.reset();
+                            break;
+                        case 'U':
+                            //Dim's turn
+                            modelListener.unableButton();
+                            break;
                         default:
                             System.err.println ("Bad message");
                             break;

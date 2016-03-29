@@ -169,16 +169,11 @@ public class DrNimUI implements ModelListener
 		frame.setVisible (true);
 
         // On user input actions, trigger the view listener.
+			//click "Take 1"
 			oneButton.addActionListener (new ActionListener()
 			{
 				public void actionPerformed (ActionEvent e)
 				{
-					msgField.setText("");
-					oneButton.setEnabled(false);
-					twoButton.setEnabled(false);
-					threeButton.setEnabled(false);
-					passButton.setEnabled(false);
-
 					try{
 						viewListener.takeOne();
 					}catch (IOException E){
@@ -187,16 +182,11 @@ public class DrNimUI implements ModelListener
 				}
 			});
 
+			//click "Take 2"
 			twoButton.addActionListener (new ActionListener()
 			{
 				public void actionPerformed (ActionEvent e)
 				{
-					msgField.setText("");
-					oneButton.setEnabled(false);
-					twoButton.setEnabled(false);
-					threeButton.setEnabled(false);
-					passButton.setEnabled(false);
-
 					try{
 						viewListener.takeTwo();
 					}catch (IOException E){
@@ -205,23 +195,15 @@ public class DrNimUI implements ModelListener
 				}
 			});
 
+			//click "Take 3"
 			threeButton.addActionListener (new ActionListener()
 			{
 				public void actionPerformed (ActionEvent e)
 				{
-					msgField.setText("");
-					oneButton.setEnabled(false);
-					twoButton.setEnabled(false);
-					threeButton.setEnabled(false);
-					passButton.setEnabled(false);
-					try
-					{
-						try{
-							viewListener.takeThree();
-						}catch (IOException E){
-							//Shouldn't happen
-						}
-
+					try{
+						viewListener.takeThree();
+					}catch (IOException E){
+						//Shouldn't happen
 					}
 					catch (IllegalArgumentException exc)
 					{
@@ -232,16 +214,11 @@ public class DrNimUI implements ModelListener
 				}
 			});
 
+			//Click "pass"
 			passButton.addActionListener (new ActionListener()
 			{
 				public void actionPerformed (ActionEvent e)
 				{
-					msgField.setText("");
-					oneButton.setEnabled(false);
-					twoButton.setEnabled(false);
-					threeButton.setEnabled(false);
-					passButton.setEnabled(false);
-
 					try{
 						viewListener.takePass();
 					}catch (IOException E){
@@ -274,8 +251,6 @@ public class DrNimUI implements ModelListener
 				public void run()
 				{
 					ref.ui = new DrNimUI();
-					ref.ui.marblePanel.setCount(15); //Initially, it should start at 15 marbles
-					ref.ui.msgField.setText("Your turn!"); //Set text message
 				}
 			});
 			return ref.ui;
@@ -347,13 +322,6 @@ public class DrNimUI implements ModelListener
 				public void run()
 				{
 					msgField.setText("You won!"); //Set text message
-
-					//reset the game
-					marblePanel.setCount(15);
-					oneButton.setEnabled(true);
-					twoButton.setEnabled(true);
-					threeButton.setEnabled(true);
-					passButton.setEnabled(true);
 				}
 			});
 		}
@@ -367,13 +335,6 @@ public class DrNimUI implements ModelListener
 				public void run()
 				{
 					msgField.setText("Dr. Nim won!"); //Set text message
-
-					//reset the game
-					marblePanel.setCount(15);
-					oneButton.setEnabled(true);
-					twoButton.setEnabled(true);
-					threeButton.setEnabled(true);
-					passButton.setEnabled(true);
 				}
 			});
 		}
@@ -404,6 +365,42 @@ public class DrNimUI implements ModelListener
 				public void run()
 				{
 					msgField.setText("Dr. Nim's turn!"); //Set text message
+				}
+			});
+		}
+
+		/**
+		 * Reset the game
+		 */
+		public void reset(){
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					//reset the game
+					marblePanel.setCount(15);
+					oneButton.setEnabled(true);
+					twoButton.setEnabled(true);
+					threeButton.setEnabled(true);
+					passButton.setEnabled(true);
+				}
+			});
+		}
+
+		/**
+		 * Make buttons unable
+		 */
+		public void unableButton(){
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					//make buttons unable
+					msgField.setText("");
+					oneButton.setEnabled(false);
+					twoButton.setEnabled(false);
+					threeButton.setEnabled(false);
+					passButton.setEnabled(false);
 				}
 			});
 		}
