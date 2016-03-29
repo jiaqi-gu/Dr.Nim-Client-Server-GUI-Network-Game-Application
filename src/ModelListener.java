@@ -14,6 +14,8 @@ import java.io.IOException;
  * Interface ModelListener specifies the interface for an object that is
  * triggered by events from the model object in the DrNim Application.
  *
+ * (The idea and structure of the code is from Prof. Kaminsky)
+ *
  * @author  Jiaqi Gu
  * @version 28-Mar-2016
  */
@@ -24,27 +26,27 @@ public interface ModelListener {
      *
      * @param num, the number of marble displays
      */
-    public void display(int num);
+    public void display(int num) throws IOException;
 
     /**
      * Perform the process that the player wins
      */
-    public void playerWin();
+    public void playerWin() throws IOException;
 
     /**
      * Perform the process that the Dr.Dim wins
      */
-    public void dimWin();
+    public void dimWin() throws IOException;
 
     /**
      * Player's turn, display "Your turn!"
      */
-    public void playerTurn();
+    public void playerTurn() throws IOException;
 
     /**
      * Dr. Dim's turn, display "Dr. Nim's turn!"
      */
-    public void dimTurn();
+    public void dimTurn() throws IOException;
 
 
 }

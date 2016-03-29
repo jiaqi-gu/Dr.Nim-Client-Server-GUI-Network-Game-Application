@@ -8,12 +8,15 @@
 //
 //******************************************************************************
 
+import java.io.IOException;
 import java.util.*;
 
 /**
  * Class DrNimModel provides the application logic for the DrNim application
  *
  * Usage: java DrNim <I>host</I> <I>port</I>
+ *
+ *  (The idea and structure of the code is from Prof. Kaminsky)
  *
  * @author  Jiaqi Gu
  * @version 28-Mar-2016
@@ -91,12 +94,20 @@ public class DrNimModel implements ViewListener{
             for(int i = 0;i<number;i++){
                 try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
                 Remaining-=1;
-                modelListener.display(Remaining);
+                try{
+                    modelListener.display(Remaining);
+                }catch (IOException E){
+                    //Shouldn't happen
+                }
                 //If remaining equals to 0, the player wins
                 if(Remaining==0){
                     try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
                     Remaining =15;
-                    modelListener.playerWin();
+                    try{
+                        modelListener.playerWin();
+                    }catch (IOException E){
+                        //Shouldn't happen
+                    }
                     return;//all marbles have been taken out
                 }
             }
@@ -109,7 +120,12 @@ public class DrNimModel implements ViewListener{
 
 
             //Dr. Dim's Turn (If there is at least one marble remained)
-            modelListener.dimTurn();//display message
+            try{
+                modelListener.dimTurn();//display message
+            }catch (IOException E){
+                //Shouldn't happen
+            }
+
 
             //delay for 2 seconds while Dr.Dim "thinks"
             try{Thread.sleep(2000);}catch (InterruptedException ie){}//Exception shouldn't happen
@@ -119,13 +135,22 @@ public class DrNimModel implements ViewListener{
                 while(Remaining>0){
                     try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
                     Remaining-=1;
-                    modelListener.display(Remaining);
+                    try{
+                        modelListener.display(Remaining);
+                    }catch (IOException E){
+                        //Shouldn't happen
+                    }
+
 
                     //If remaining equals to 0, the Dr. dim wins
                     if(Remaining==0){
                         try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
                         Remaining =15;
-                        modelListener.dimWin();
+                        try{
+                            modelListener.dimWin();
+                        }catch (IOException E){
+                            //Shouldn't happen
+                        }
                         return;//all marbles have been taken out
                     }
                 }
@@ -137,19 +162,32 @@ public class DrNimModel implements ViewListener{
                 for(int i = 0;i<2;i++){
                     try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
                     Remaining-=1;
-                    modelListener.display(Remaining);
+                    try{
+                        modelListener.display(Remaining);
+                    }catch (IOException E){
+                        //Shouldn't happen
+                    }
                 }
                 try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
             }else{
                 //Otherwise, Dr. Nim takes one marble.
                 try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
                 Remaining-=1;
-                modelListener.display(Remaining);
+                try{
+                    modelListener.display(Remaining);
+                }catch (IOException E){
+                    //Shouldn't happen
+                }
                 try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
             }
 
             //Make the player to do the next move (If there is at least one marble remained)
-            modelListener.playerTurn();
+            try{
+                modelListener.playerTurn();
+            }catch (IOException E){
+                //Shouldn't happen
+            }
+
 
         }
     }

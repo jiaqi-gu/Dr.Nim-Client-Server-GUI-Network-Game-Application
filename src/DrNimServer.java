@@ -1,28 +1,28 @@
 //******************************************************************************
 //
-// File:    DrNim.java
+// File:    DrNimServer.java
 // Package: ---
-// Unit:    Class DrNim
+// Unit:    Class DrNimServer
 //
 // This Java source file is for CSCI-251 Project 3
 //
 //******************************************************************************
 
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Class PasswordCrackClient is the client main program
+ * Class DrNimServer is the server main program
  *
- * Usage: java DrNim <I>host</I> <I>port</I>
+ * Usage: java DrNimServer <I>host</I> <I>port</I>
  *
  *  (The idea and structure of the code is from Prof. Kaminsky)
  *
  * @author  Jiaqi Gu
  * @version 28-Mar-2016
  */
-public class DrNim {
-
+public class DrNimServer {
     /**
      * Main program.
      */
@@ -34,13 +34,17 @@ public class DrNim {
         String host = args[0];
         int port = Integer.parseInt (args[1]);
 
-        Socket socket = new Socket();
-        socket.connect (new InetSocketAddress (host, port));
+        ServerSocket serversocket = new ServerSocket();
+        serversocket.bind (new InetSocketAddress (host, port));
 
-        DrNimUI view = DrNimUI.create();
-        ModelProxy proxy = new ModelProxy (socket);
-        view.setViewListener (proxy);
-        proxy.setModelListener (view);
+        for (;;)
+        {
+            Socket socket = serversocket.accept();
+            ViewProxy proxy = new ViewProxy (socket);
+            DrNimModel model = new DrNimModel();
+            model.setModelListener (proxy);
+            proxy.setViewListener (model);
+        }
     }
 
     /**
@@ -48,9 +52,7 @@ public class DrNim {
      */
     private static void usage()
     {
-        System.err.println ("Usage: java PasswordCrackClient <host> <port>");
+        System.err.println ("Usage: java DrNimServer <host> <port>");
         System.exit (1);
     }
-
-
 }

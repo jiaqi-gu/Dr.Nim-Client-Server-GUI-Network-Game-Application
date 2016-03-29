@@ -41,6 +41,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 /**
  * Class DrNimUI provides the user interface for the Dr. Nim network game.
@@ -178,7 +179,11 @@ public class DrNimUI implements ModelListener
 					threeButton.setEnabled(false);
 					passButton.setEnabled(false);
 
-					viewListener.takeOne();
+					try{
+						viewListener.takeOne();
+					}catch (IOException E){
+						//Shouldn't happen
+					}
 				}
 			});
 
@@ -192,7 +197,11 @@ public class DrNimUI implements ModelListener
 					threeButton.setEnabled(false);
 					passButton.setEnabled(false);
 
-					viewListener.takeTwo();
+					try{
+						viewListener.takeTwo();
+					}catch (IOException E){
+						//Shouldn't happen
+					}
 				}
 			});
 
@@ -207,7 +216,12 @@ public class DrNimUI implements ModelListener
 					passButton.setEnabled(false);
 					try
 					{
-						viewListener.takeThree();
+						try{
+							viewListener.takeThree();
+						}catch (IOException E){
+							//Shouldn't happen
+						}
+
 					}
 					catch (IllegalArgumentException exc)
 					{
@@ -228,7 +242,12 @@ public class DrNimUI implements ModelListener
 					threeButton.setEnabled(false);
 					passButton.setEnabled(false);
 
-					viewListener.takePass();
+					try{
+						viewListener.takePass();
+					}catch (IOException E){
+						//Shouldn't happen
+					}
+
 				}
 			});
 
