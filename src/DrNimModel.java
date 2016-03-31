@@ -9,7 +9,6 @@
 //******************************************************************************
 
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Class DrNimModel provides the application logic for the DrNim application
@@ -137,6 +136,7 @@ public class DrNimModel implements ViewListener{
                 }
             }
 
+            //if there is at least one marble taken off
             if(number != 0){
                 //delay for 0.5 sec after the last marble disappears
                 try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
@@ -154,6 +154,7 @@ public class DrNimModel implements ViewListener{
 
             //delay for 2 seconds while Dr.Dim "thinks"
             try{Thread.sleep(2000);}catch (InterruptedException ie){}//Exception shouldn't happen
+
 
             //If there are three or fewer marbles left, Dr. Nim takes all the marbles.
             if(Remaining<=3){
@@ -205,6 +206,7 @@ public class DrNimModel implements ViewListener{
                 }
                 try{Thread.sleep(500);}catch (InterruptedException ie){System.err.println("Delay failed");}
             }
+
 
             //Make the player to do the next move (If there is at least one marble remained)
             try{
