@@ -27,15 +27,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -124,7 +116,6 @@ public class DrNimUI implements ModelListener
 	private JButton threeButton;
 	private JButton passButton;
 
-	//private int remaining;
 	private ViewListener viewListener;
 
 
@@ -178,6 +169,7 @@ public class DrNimUI implements ModelListener
 						viewListener.takeOne();
 					}catch (IOException E){
 						//Shouldn't happen
+						errorIOError();
 					}
 				}
 			});
@@ -191,6 +183,7 @@ public class DrNimUI implements ModelListener
 						viewListener.takeTwo();
 					}catch (IOException E){
 						//Shouldn't happen
+						errorIOError();
 					}
 				}
 			});
@@ -208,6 +201,7 @@ public class DrNimUI implements ModelListener
 					catch (IllegalArgumentException exc)
 					{
 						//shouldn't happen
+						errorIOError();
 					}
 
 
@@ -223,8 +217,18 @@ public class DrNimUI implements ModelListener
 						viewListener.takePass();
 					}catch (IOException E){
 						//Shouldn't happen
+						errorIOError();
 					}
 
+				}
+			});
+
+			//Program should quit when user close the window
+			frame.addWindowListener (new WindowAdapter()
+			{
+				public void windowClosing (WindowEvent e)
+				{
+					System.exit (0);
 				}
 			});
 
@@ -242,6 +246,8 @@ public class DrNimUI implements ModelListener
 
 		/**
 		 * Construct a new Password Crack UI.
+		 *
+		 * This code is from Prof. Kaminsky's Lecture
 		 */
 		public static DrNimUI create()
 		{
@@ -259,6 +265,8 @@ public class DrNimUI implements ModelListener
 
 		/**
 		 * Execute the given runnable object on the Swing thread.
+		 *
+		 * This code is from Prof. Kaminsky's Lecture
 		 */
 		private static void onSwingThreadDo
 		(Runnable task)
@@ -272,6 +280,19 @@ public class DrNimUI implements ModelListener
 				exc.printStackTrace (System.err);
 				System.exit (1);
 			}
+		}
+
+		/**
+		 * Display an error dialog for an I/O error and exit.
+		 */
+		private void errorIOError()
+		{
+			JOptionPane.showMessageDialog
+					(/*parentComponent*/ frame,
+          /*message        */ "I/O error when sending to server",
+          /*title          */ "I/O error",
+          /*messageType    */ JOptionPane.ERROR_MESSAGE);
+			System.exit (0);
 		}
 
 
