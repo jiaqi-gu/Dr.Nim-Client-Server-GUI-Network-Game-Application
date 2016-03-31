@@ -263,39 +263,6 @@ public class DrNimUI implements ModelListener
 		}
 
 
-		/**
-		 * Execute the given runnable object on the Swing thread.
-		 *
-		 * This code is from Prof. Kaminsky's Lecture
-		 */
-		private static void onSwingThreadDo
-		(Runnable task)
-		{
-			try
-			{
-				SwingUtilities.invokeAndWait (task);
-			}
-			catch (Throwable exc)
-			{
-				exc.printStackTrace (System.err);
-				System.exit (1);
-			}
-		}
-
-		/**
-		 * Display an error dialog for an I/O error and exit.
-		 */
-		private void errorIOError()
-		{
-			JOptionPane.showMessageDialog
-					(/*parentComponent*/ frame,
-          /*message        */ "I/O error when sending to server",
-          /*title          */ "I/O error",
-          /*messageType    */ JOptionPane.ERROR_MESSAGE);
-			System.exit (0);
-		}
-
-
 		// Exported operations
 
 		/**
@@ -425,5 +392,38 @@ public class DrNimUI implements ModelListener
 				}
 			});
 		}
+
+		/**
+		 * Execute the given runnable object on the Swing thread.
+		 *
+		 * This code is from Prof. Kaminsky's Lecture
+		 */
+		private static void onSwingThreadDo
+		(Runnable task)
+		{
+			try
+			{
+				SwingUtilities.invokeAndWait (task);
+			}
+			catch (Throwable exc)
+			{
+				exc.printStackTrace (System.err);
+				System.exit (1);
+			}
+		}
+
+		/**
+		 * Display an error dialog for an I/O error and exit.
+		 */
+		private void errorIOError()
+		{
+			JOptionPane.showMessageDialog
+					(/*parentComponent*/ frame,
+          /*message        */ "I/O error when sending to server",
+          /*title          */ "I/O error",
+          /*messageType    */ JOptionPane.ERROR_MESSAGE);
+			System.exit (0);
+		}
+
 
 	}
