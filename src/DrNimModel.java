@@ -129,6 +129,7 @@ public class DrNimModel implements ViewListener{
                         try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
                         Remaining =15;
                         modelListener.reset();
+                        modelListener.playerTurn();
                     }catch (IOException E){
                         //Shouldn't happen
                     }
@@ -174,6 +175,7 @@ public class DrNimModel implements ViewListener{
                             try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
                             Remaining =15;
                             modelListener.reset();
+                            modelListener.playerTurn();
                         }catch (IOException E){
                             //Shouldn't happen
                         }
