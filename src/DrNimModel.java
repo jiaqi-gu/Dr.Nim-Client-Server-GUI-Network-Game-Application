@@ -38,7 +38,7 @@ public class DrNimModel implements ViewListener{
     // Exported operations.
 
     /**
-     * Set the model listener object for this Password Crack model.
+     * Set the model listener object for this DrNim model.
      *
      * @param  modelListener  Model listener.
      */
@@ -86,8 +86,10 @@ public class DrNimModel implements ViewListener{
 
         public void run(){
             try{
-                modelListener.reset();
+                Remaining = 15;
+                modelListener.display(Remaining);
                 modelListener.playerTurn();
+                modelListener.enableButtons();
             }catch (IOException E){
                 //Shouldn't happen
             }
@@ -109,6 +111,7 @@ public class DrNimModel implements ViewListener{
             //make buttons unable first
             try{
                 modelListener.unableButton();
+                modelListener.emptyText();
             }catch (IOException E){
                 //Shouldn't happen
             }
@@ -128,8 +131,9 @@ public class DrNimModel implements ViewListener{
                         modelListener.playerWin();
                         try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
                         Remaining =15;
-                        modelListener.reset();
+                        modelListener.display(Remaining);
                         modelListener.playerTurn();
+                        modelListener.enableButtons();
                     }catch (IOException E){
                         //Shouldn't happen
                     }
@@ -174,8 +178,9 @@ public class DrNimModel implements ViewListener{
                             modelListener.dimWin();
                             try{Thread.sleep(2000);}catch (InterruptedException ie){System.err.println("Delay failed");}
                             Remaining =15;
-                            modelListener.reset();
+                            modelListener.display(Remaining);
                             modelListener.playerTurn();
+                            modelListener.enableButtons();
                         }catch (IOException E){
                             //Shouldn't happen
                         }
@@ -213,6 +218,7 @@ public class DrNimModel implements ViewListener{
             //Make the player to do the next move (If there is at least one marble remained)
             try{
                 modelListener.playerTurn();
+                modelListener.enableButtons();
             }catch (IOException E){
                 //Shouldn't happen
             }

@@ -107,18 +107,26 @@ public class ViewProxy
     }
 
     /**
-     * Reset the game
-     */
-    public void reset()throws IOException{
-        out.writeByte ('R');
-        out.flush();
-    }
-
-    /**
      * Make buttons unable
      */
     public void unableButton() throws IOException{
         out.writeByte ('U');
+        out.flush();
+    }
+
+    /**
+     * Enable buttons
+     */
+    public void enableButtons() throws IOException{
+        out.writeByte ('E');
+        out.flush();
+    }
+
+    /**
+     * Display "" (empty text)
+     */
+    public void emptyText() throws IOException{
+        out.writeByte ('T');
         out.flush();
     }
 

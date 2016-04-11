@@ -289,7 +289,6 @@ public class DrNimUI implements ModelListener
 		 * @param num, number of marble remaining
 		 */
 		public void display(final int num){
-			//marblePanel.setCount(num);
 			onSwingThreadDo (new Runnable()
 			{
 				public void run()
@@ -303,8 +302,6 @@ public class DrNimUI implements ModelListener
 		 * Perform the process that the player wins
 		 */
 		public void playerWin(){
-			//delay for 2 seconds
-			//try{Thread.sleep(2000);}catch (InterruptedException ie){}//Exception shouldn't happen
 			onSwingThreadDo (new Runnable()
 			{
 				public void run()
@@ -327,6 +324,7 @@ public class DrNimUI implements ModelListener
 			});
 		}
 
+
 		/**
 		 * Player's turn, display "Your turn!"
 		 */
@@ -336,13 +334,10 @@ public class DrNimUI implements ModelListener
 				public void run()
 				{
 					msgField.setText("Your turn!"); //Set text message
-					oneButton.setEnabled(true);
-					twoButton.setEnabled(true);
-					threeButton.setEnabled(true);
-					passButton.setEnabled(true);
 				}
 			});
 		}
+
 
 		/**
 		 * Dr. Dim's turn, display "Dr. Nim's turn!"
@@ -357,23 +352,21 @@ public class DrNimUI implements ModelListener
 			});
 		}
 
+
 		/**
-		 * Reset the game
+		 * Display "" (empty text)
 		 */
-		public void reset(){
+		public void emptyText(){
 			onSwingThreadDo (new Runnable()
 			{
 				public void run()
 				{
-					//reset the game
-					marblePanel.setCount(15);
-					oneButton.setEnabled(true);
-					twoButton.setEnabled(true);
-					threeButton.setEnabled(true);
-					passButton.setEnabled(true);
+					//set text filed to empty
+					msgField.setText("");
 				}
 			});
 		}
+
 
 		/**
 		 * Make buttons unable
@@ -383,8 +376,7 @@ public class DrNimUI implements ModelListener
 			{
 				public void run()
 				{
-					//make buttons unable
-					msgField.setText("");
+					//make all buttons unable
 					oneButton.setEnabled(false);
 					twoButton.setEnabled(false);
 					threeButton.setEnabled(false);
@@ -392,6 +384,25 @@ public class DrNimUI implements ModelListener
 				}
 			});
 		}
+
+
+		/**
+		 * Enable buttons
+		 */
+		public void enableButtons(){
+			onSwingThreadDo (new Runnable()
+			{
+				public void run()
+				{
+					//Enable all buttons
+					oneButton.setEnabled(true);
+					twoButton.setEnabled(true);
+					threeButton.setEnabled(true);
+					passButton.setEnabled(true);
+				}
+			});
+		}
+
 
 		/**
 		 * Execute the given runnable object on the Swing thread.
@@ -411,6 +422,7 @@ public class DrNimUI implements ModelListener
 				System.exit (1);
 			}
 		}
+
 
 		/**
 		 * Display an error dialog for an I/O error and exit.
