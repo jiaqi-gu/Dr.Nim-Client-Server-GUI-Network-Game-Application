@@ -48,7 +48,7 @@ public class DrNim {
      */
     private static void usage()
     {
-        System.err.println ("Usage: java PasswordCrackClient <host> <port>");
+        System.err.println ("Usage: java DrNim <host> <port>");
         System.exit (1);
     }
 
