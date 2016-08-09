@@ -4,14 +4,14 @@ A server-client network game implemented by Java.
 
 The server program should be run by this command line:
 
-java DrNimServer <host> <port>
+java DrNimServer host port
 
     <host> is the host name or IP address of the server.
     <port> is the port number of the server.
 
 The client program must be run by typing this command line:
 
-java DrNim <host> <port>
+java DrNim host port
 
     <host> is the host name or IP address of the server.
     <port> is the port number of the server.
